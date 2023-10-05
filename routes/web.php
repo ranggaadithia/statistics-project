@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ScoreController;
+use App\Models\Score;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,12 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('/', ScoreController::class)->names([
-    'index' => 'scores.index',
-    'create' => 'scores.create',
-    'store' => 'scores.store',
-    'show' => 'scores.show',
-    'edit' => 'scores.edit',
-    'update' => 'scores.update',
-    'destroy' => 'scores.destroy',
-]);
+
+// Route::get('/', [ScoreController::class, 'index'])->name('scores.index');
+// Route::post('/', [ScoreController::class, 'store'])->name('scores.store');
+// Route::post('/{id}', [ScoreController::class, 'destroy'])->name('scores.destroy');
+Route::resource('score', ScoreController::class);
