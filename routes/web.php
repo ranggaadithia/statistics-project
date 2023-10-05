@@ -14,4 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('/', ScoreController::class);
+Route::resource('/', ScoreController::class)->names([
+    'index' => 'scores.index',
+    'create' => 'scores.create',
+    'store' => 'scores.store',
+    'show' => 'scores.show',
+    'edit' => 'scores.edit',
+    'update' => 'scores.update',
+    'destroy' => 'scores.destroy',
+]);
