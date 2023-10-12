@@ -2,7 +2,7 @@
 
 @section('container')
 
-<div class="container mt-5">
+<div class="container mt-5 px-5">
   <!-- Button trigger modal -->
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -17,7 +17,7 @@
         @csrf
           <div class="mb-3">
             <label for="score" class="form-label">Score</label>
-            <input type="number" class="form-control" id="score" placeholder="Masukan Score" name="score" value="20">
+            <input type="number" class="form-control" id="score" placeholder="Masukan Score" name="score">
           </div>
         </div>
         <div class="modal-footer">

@@ -16,7 +16,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-// Route::get('/', [ScoreController::class, 'index'])->name('scores.index');
-// Route::post('/', [ScoreController::class, 'store'])->name('scores.store');
-// Route::post('/{id}', [ScoreController::class, 'destroy'])->name('scores.destroy');
+Route::redirect('/', '/score');
 Route::resource('score', ScoreController::class);
