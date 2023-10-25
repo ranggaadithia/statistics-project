@@ -77,4 +77,49 @@ class ScoreController extends Controller
 
         return back()->with('success', 'Data berhasil dihapus');
     }
+
+    public function bergolong()
+    {
+        $scores = Score::all();
+
+        // Mengambil nilai minimum dan maksimum dari skor
+        $minScore = $scores->min('score');
+        $maxScore = $scores->max('score');
+
+        // Menentukan jumlah kelas interval (bisa disesuaikan)
+        $jumlahKelas = 5;
+
+        // Menghitung lebar interval
+        $intervalWidth = ceil(($maxScore - $minScore) / $jumlahKelas);
+
+        // Mengelompokkan data skor ke dalam kelas interval
+        $scoreGroups = [];
+        for ($i = 0; $i < $jumlahKelas; $i++) {
+            $lowerBound = $minScore + ($i * $intervalWidth);
+            $upperBound = $lowerBound + $intervalWidth - 1;
+            $count = $scores->whereBetween('score', [$lowerBound, $upperBound])->count();
+
+            // Menyimpan data kelas interval, nilai tengah, dan frekuensi
+            $scoreGroups[] = [
+                'interval' => "$lowerBound - $upperBound",
+                'mid_value' => ($lowerBound + $upperBound) / 2,
+                'frequency' => $count,
+            ];
+        }
+
+        return view('dashboard.bergolong', compact('scoreGroups'));
+    }
+
+    public function distribusiFrekuensi()
+    {
+        $scoreFrequencies = Score::groupBy('score')
+            ->selectRaw('score, count(*) as count')
+            ->orderBy('score', 'asc')
+            ->get()
+            ->map(function ($item) {
+                return $item;
+            });
+
+        return view('dashboard.distribusi-frekuensi', compact('scoreFrequencies'));
+    }
 }

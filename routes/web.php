@@ -18,3 +18,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/score');
 Route::resource('score', ScoreController::class);
+Route::get('/bergolong', [ScoreController::class, 'bergolong']);
+Route::get('/distribusi-frekuensi', [ScoreController::class, 'distribusiFrekuensi']);
