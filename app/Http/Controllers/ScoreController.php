@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Score;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ScoreController extends Controller
 {
@@ -121,5 +122,47 @@ class ScoreController extends Controller
             });
 
         return view('dashboard.distribusi-frekuensi', compact('scoreFrequencies'));
+    }
+
+    public function getChiSqure()
+    {
+        $result = DB::table('tb_zed')->get();
+
+        return view('dashboard.chi', compact('result'));
+    }
+
+    public function calculateChiSqure(Request $request)
+    {
+
+        $chi = DB::table('tb_zed')->where('z', substr($request->chi, 0, -1))->first();
+        $lastChi    = substr($request->chi, -1);
+        $result = '';
+
+        if ($lastChi === '0') {
+            $result = $chi->nol;
+        } elseif ($lastChi === '1') {
+            $result = $chi->satu;
+        } elseif ($lastChi === '2') {
+            $result = $chi->dua;
+        } elseif ($lastChi === '3') {
+            $result = $chi->tiga;
+        } elseif ($lastChi === '4') {
+            $result = $chi->empat;
+        } elseif ($lastChi === '5') {
+            $result = $chi->lima;
+        } elseif ($lastChi === '6') {
+            $result = $chi->enam;
+        } elseif ($lastChi === '7') {
+            $result = $chi->tujuh;
+        } elseif ($lastChi === '8') {
+            $result = $chi->delapan;
+        } elseif ($lastChi === '9') {
+            $result = $chi->sembilan;
+        } else {
+            $result = $chi->nol;
+        }
+
+
+        return back()->with('success', $result);
     }
 }
