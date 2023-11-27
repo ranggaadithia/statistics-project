@@ -88,7 +88,7 @@ class ScoreController extends Controller
         $maxScore = $scores->max('score');
 
         // Menentukan jumlah kelas interval (bisa disesuaikan)
-        $jumlahKelas = 5;
+        $jumlahKelas = 10;
 
         // Menghitung lebar interval
         $intervalWidth = ceil(($maxScore - $minScore) / $jumlahKelas);
@@ -134,8 +134,12 @@ class ScoreController extends Controller
     public function calculateChiSqure(Request $request)
     {
 
+        $request->validate([
+            'chi' => 'required|regex:/^\d+(\.\d{2})?$/',
+        ]);
+
         $chi = DB::table('tb_zed')->where('z', substr($request->chi, 0, -1))->first();
-        $lastChi    = substr($request->chi, -1);
+        $lastChi = substr($request->chi, -1);
         $result = '';
 
         if ($lastChi === '0') {
@@ -164,5 +168,33 @@ class ScoreController extends Controller
 
 
         return back()->with('success', $result);
+    }
+
+    public function ujiT()
+    {
+        $result = DB::table('ttest')->get();
+        $sumX1 = $result->sum('x1');
+        $sumX2 = $result->sum('x2');
+        $averageX1 = $result->avg('x1');
+        $averageX2 = $result->avg('x2');
+        $SD1 = DB::table('ttest')
+            ->selectRaw('SQRT(SUM(POWER(x1 - ' . $averageX1 . ', 2)) / (COUNT(x1) - 1)) AS result')->first();
+        $SD2 = DB::table('ttest')
+            ->selectRaw('SQRT(SUM(POWER(x2 - ' . $averageX2 . ', 2)) / (COUNT(x2) - 1)) AS result')->first();
+
+        $roundedSDX1 = round($SD1->result, 2);
+        $roundedSDX2 = round($SD2->result, 2);
+
+        $variance1 = DB::table('ttest')
+            ->selectRaw('SUM(POWER(x1 - ' . $averageX1 . ', 2)) / (COUNT(x1) - 1) AS result')
+            ->first();
+        $variance2 = DB::table('ttest')
+            ->selectRaw('SUM(POWER(x2 - ' . $averageX2 . ', 2)) / (COUNT(x2) - 1) AS result')
+            ->first();
+
+        $roundedVariance1 = round($variance1->result, 2);
+        $roundedVariance2 = round($variance2->result, 2);
+
+        return view('dashboard.t', compact('result', 'sumX1', 'sumX2', 'averageX1', 'averageX2', 'roundedSDX1', 'roundedSDX2', 'roundedVariance1', 'roundedVariance2'));
     }
 }

@@ -9,10 +9,10 @@
      </button>
      <div class="collapse show" id="home-collapse">
        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-         <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Data Tunggal</a></li>
-         <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Data Distribusi Frekuensi</a></li>
+         <li><a href="/score" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Data Tunggal</a></li>
+         <li><a href="/distribusi-frekuensi" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Data Distribusi Frekuensi</a></li>
          <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Table Deskripsi Data</a></li>
-         <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Data Bergolong</a></li>
+         <li><a href="/data-bergolong" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Data Bergolong</a></li>
        </ul>
      </div>
    </li>
@@ -22,10 +22,8 @@
      </button>
      <div class="collapse" id="dashboard-collapse">
        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-         <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Overview</a></li>
-         <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Weekly</a></li>
-         <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Monthly</a></li>
-         <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Annually</a></li>
+         <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Table Z Chi Kuadrat</a></li>
+         <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Table Z Liliefors</a></li>
        </ul>
      </div>
    </li>

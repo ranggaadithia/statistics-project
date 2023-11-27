@@ -29,7 +29,7 @@
   </div>
 </div>
   <div class="d-flex justify-content-between mb-3">
-    <h3>Data Skor</h3>
+    <h3>Data Tunggal</h3>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
       Tambah Data
     </button>
@@ -65,7 +65,7 @@
                   <button type="submit" class="btn btn-danger">Hapus</button>
                 </form>
               </div>
-              <div class="modal fade" id="updateModal{{ $score->id }}" tabindex="-1" aria-labelledby="updateModal{{ $score->id }}Label" aria-hidden="true">
+              <div class=" fade" id="updateModal{{ $score->id }}" tabindex="-1" aria-labelledby="updateModal{{ $score->id }}Label" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">

@@ -12,6 +12,9 @@
    <input type="text" class="form-control w-50" name="chi" placeholder="calculate"> 
    <div class="mx-1"></div>
    <button type="submit" class="btn btn-primary">Cari</button>
+   @error('chi')
+   {{ $message }}
+ @enderror
  </form>
 
 @if (session()->has('success'))

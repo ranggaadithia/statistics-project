@@ -5,7 +5,7 @@
 <div class="container mt-5">
 
   <div class="d-flex justify-content-between mb-3">
-    <h3>Data Skor</h3>
+    <h3>Data Bergolong</h3>
   </div>
   <table id="myTable" class="display mt-3">
     <thead>

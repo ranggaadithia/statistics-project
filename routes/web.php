@@ -22,3 +22,4 @@ Route::get('/data-bergolong', [ScoreController::class, 'bergolong']);
 Route::get('/distribusi-frekuensi', [ScoreController::class, 'distribusiFrekuensi']);
 Route::get('/chi', [ScoreController::class, 'getChiSqure']);
 Route::post('/chi', [ScoreController::class, 'calculateChiSqure'])->name('chi');
+Route::get('/t', [ScoreController::class, 'ujiT']);
