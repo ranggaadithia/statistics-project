@@ -65,7 +65,7 @@
                   <button type="submit" class="btn btn-danger">Hapus</button>
                 </form>
               </div>
-              <div class=" fade" id="updateModal{{ $score->id }}" tabindex="-1" aria-labelledby="updateModal{{ $score->id }}Label" aria-hidden="true">
+              <div class="modal fade" id="updateModal{{ $score->id }}" tabindex="-1" aria-labelledby="updateModal{{ $score->id }}Label" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">

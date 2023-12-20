@@ -197,4 +197,21 @@ class ScoreController extends Controller
 
         return view('dashboard.t', compact('result', 'sumX1', 'sumX2', 'averageX1', 'averageX2', 'roundedSDX1', 'roundedSDX2', 'roundedVariance1', 'roundedVariance2'));
     }
+
+    public function liliefors()
+    {
+        $scores = Score::all();
+        $scoresAverage = $scores->avg('score');
+        $scoresSTD = DB::table('scores')
+            ->selectRaw('SQRT(SUM(POWER(score - ' . $scoresAverage . ', 2)) / (COUNT(score) - 1)) AS result')->first();
+
+        $zScores = [];
+        foreach ($scores as $score) {
+            $scoreValue = $score->score;
+            $zScore = ($scoreValue - $scoresAverage) / $scoresSTD->result;
+            $zScores[$score->id] = number_format($zScore, 5);
+        }
+
+        return view('dashboard.liliefors', compact('scores', 'zScores'));
+    }
 }
