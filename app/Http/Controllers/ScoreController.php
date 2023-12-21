@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Score;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use MathPHP\Probability\Distribution\Continuous;
 
 class ScoreController extends Controller
 {
@@ -198,6 +199,12 @@ class ScoreController extends Controller
         return view('dashboard.t', compact('result', 'sumX1', 'sumX2', 'averageX1', 'averageX2', 'roundedSDX1', 'roundedSDX2', 'roundedVariance1', 'roundedVariance2'));
     }
 
+    function normsdist($x)
+    {
+        $distribution = new Continuous\Normal(0, 1); // Distribusi normal standar dengan rata-rata 0 dan deviasi standar 1
+        return $distribution->cdf($x); // Fungsi distribusi kumulatif
+    }
+
     public function liliefors()
     {
         $scores = Score::all();
@@ -205,11 +212,34 @@ class ScoreController extends Controller
         $scoresSTD = DB::table('scores')
             ->selectRaw('SQRT(SUM(POWER(score - ' . $scoresAverage . ', 2)) / (COUNT(score) - 1)) AS result')->first();
 
+        // Urutkan data
+        $sortedScores = $scores->pluck('score')->sort()->toArray();
+
+        // Jumlah total data
+        $totalData = count($sortedScores);
+
+        // Inisialisasi array untuk menyimpan probabilitas kumulatif empiris
+        $empiricalCumulativeProbability = [];
+
+        // Hitung probabilitas kumulatif
+        $cumulativeCount = 0;
+        foreach ($sortedScores as $value) {
+            $cumulativeCount++;
+            $empiricalCumulativeProbability[$value] = $cumulativeCount / $totalData;
+        }
+
         $zScores = [];
         foreach ($scores as $score) {
             $scoreValue = $score->score;
             $zScore = ($scoreValue - $scoresAverage) / $scoresSTD->result;
-            $zScores[$score->id] = number_format($zScore, 5);
+            $normsdist = $this->normsdist($zScore);
+            $zScores[$score->id] = [
+                'scoreValue' => $scoreValue,
+                'zScore' => number_format($zScore, 5),
+                'normsdist' => number_format($normsdist, 5),
+                'empiricalCumulativeProbability' => number_format($empiricalCumulativeProbability[$scoreValue], 5),
+                'fx' => abs($normsdist - $empiricalCumulativeProbability[$scoreValue]),
+            ];
         }
 
         return view('dashboard.liliefors', compact('scores', 'zScores'));

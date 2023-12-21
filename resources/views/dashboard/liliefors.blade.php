@@ -13,15 +13,21 @@
             <th width="20">Nomor</th>
             <th>Skor</th>
             <th>Z</th>
+            <th>F(x)</th>
+            <th>S(z)</th>
+            <th>|F(x) - S(z)|</th>
         </tr>
     </thead>
     <tbody>
-      @foreach ($scores as $score)  
-        <tr>
-            <td>{{ $loop->iteration }}</td>
-            <td>{{ $score->score }}</td>
-            <td>{{ $zScores[$score->id] }}</td>
-        </tr>
+      @foreach ($zScores as $scoreId => $data)
+          <tr>
+              <td>{{ $loop->iteration }}</td>
+              <td>{{ $data['scoreValue'] }}</td>
+              <td>{{ $data['zScore'] }}</td>
+              <td>{{ $data['normsdist'] }}</td>
+              <td>{{ $data['empiricalCumulativeProbability'] }}</td>
+              <td>{{ $data['fx'] }}</td>
+          </tr>
       @endforeach
     </tbody>
   </table>
