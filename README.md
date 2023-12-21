@@ -12,6 +12,11 @@ composer require markrogoyski/math-php
 
 ## Usage
 
+Pertama tambahkan route berikut 
+```php
+Route::get('/liliefors', [ScoreController::class, 'liliefors'])->name('liliefors'); #silahkan di sesuaikan
+```
+
 Dalam Controller kalian masukan code-code berikut 
 
 ```php
