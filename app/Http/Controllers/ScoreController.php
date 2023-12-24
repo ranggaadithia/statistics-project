@@ -201,8 +201,8 @@ class ScoreController extends Controller
 
     function normsdist($x)
     {
-        $distribution = new Continuous\Normal(0, 1); // Distribusi normal standar dengan rata-rata 0 dan deviasi standar 1
-        return $distribution->cdf($x); // Fungsi distribusi kumulatif
+        $distribution = new Continuous\Normal(0, 1);
+        return $distribution->cdf($x);
     }
 
     public function liliefors()
@@ -212,16 +212,12 @@ class ScoreController extends Controller
         $scoresSTD = DB::table('scores')
             ->selectRaw('SQRT(SUM(POWER(score - ' . $scoresAverage . ', 2)) / (COUNT(score) - 1)) AS result')->first();
 
-        // Urutkan data
         $sortedScores = $scores->pluck('score')->sort()->toArray();
 
-        // Jumlah total data
         $totalData = count($sortedScores);
 
-        // Inisialisasi array untuk menyimpan probabilitas kumulatif empiris
         $empiricalCumulativeProbability = [];
 
-        // Hitung probabilitas kumulatif
         $cumulativeCount = 0;
         foreach ($sortedScores as $value) {
             $cumulativeCount++;
