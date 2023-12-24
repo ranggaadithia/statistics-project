@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Score;
 use Illuminate\Http\Request;
+use App\Exports\ScoresExport;
+use App\Imports\ScoresImport;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use MathPHP\Probability\Distribution\Continuous;
 
 class ScoreController extends Controller
@@ -239,5 +242,22 @@ class ScoreController extends Controller
         }
 
         return view('dashboard.liliefors', compact('scores', 'zScores'));
+    }
+
+    public function export()
+    {
+        return Excel::download(new ScoresExport, 'scores.xlsx');
+    }
+
+    public function importView()
+    {
+        return view('dashboard.import');
+    }
+
+    public function import()
+    {
+        Excel::import(new ScoresImport, request()->file('file'));
+
+        return redirect('/')->with('success', 'Success Import Scores');
     }
 }

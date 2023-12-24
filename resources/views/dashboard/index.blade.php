@@ -30,9 +30,13 @@
 </div>
   <div class="d-flex justify-content-between mb-3">
     <h3>Data Tunggal</h3>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      Tambah Data
-    </button>
+    <div>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Tambah Data
+      </button>
+      <a href="/export" class="btn btn-outline-success">Export Scores</a>
+      <a href="/import" class="btn btn-success">Import Score</a>
+    </div>
   </div>
   @if (session()->has('success')) 
     <div class="alert alert-success alert-dismissible fade show" role="alert">
