@@ -1,3 +1,89 @@
+# Uji-T
+
+pertama download file [ttest.sql](https://github.com/ranggaadithia/statistics-project/blob/main/ttest.sql) pada repo ini, lalu import ke dalam database kalian.
+
+lalu copy code dibawah lalu paste di controller kalian
+```php
+public function ujiT()
+{
+    $result = DB::table('ttest')->get();
+    $sumX1 = $result->sum('x1');
+    $sumX2 = $result->sum('x2');
+    $averageX1 = $result->avg('x1');
+    $averageX2 = $result->avg('x2');
+    $SD1 = DB::table('ttest')
+        ->selectRaw('SQRT(SUM(POWER(x1 - ' . $averageX1 . ', 2)) / (COUNT(x1) - 1)) AS result')->first();
+    $SD2 = DB::table('ttest')
+        ->selectRaw('SQRT(SUM(POWER(x2 - ' . $averageX2 . ', 2)) / (COUNT(x2) - 1)) AS result')->first();
+
+    $roundedSDX1 = round($SD1->result, 2);
+    $roundedSDX2 = round($SD2->result, 2);
+
+    $variance1 = DB::table('ttest')
+        ->selectRaw('SUM(POWER(x1 - ' . $averageX1 . ', 2)) / (COUNT(x1) - 1) AS result')
+        ->first();
+    $variance2 = DB::table('ttest')
+        ->selectRaw('SUM(POWER(x2 - ' . $averageX2 . ', 2)) / (COUNT(x2) - 1) AS result')
+        ->first();
+
+    $roundedVariance1 = round($variance1->result, 2);
+    $roundedVariance2 = round($variance2->result, 2);
+
+    return view('dashboard.t', compact('result', 'sumX1', 'sumX2', 'averageX1', 'averageX2', 'roundedSDX1', 'roundedSDX2', 'roundedVariance1', 'roundedVariance2'));
+}
+```
+
+lalu tambahkan ini di route `web.php`
+
+```php
+Route::get('/uji-t', [ScoreController::class, 'ujiT'])->name('uji-t');
+```
+
+terakhir buat table ini di view kalian
+
+```html
+<table>
+  <thead>
+   <tr>
+    <th>#</th>
+    <th>X1</th>
+    <th>X2</th>
+   </tr>
+  </thead>
+  <tbody>
+   @foreach ($result as $item)       
+   <tr>
+    <td>{{ $loop->iteration }}</td>
+    <td>{{ $item->x1 }}</td>
+    <td>{{ $item->x2 }}</td>
+   </tr>
+   @endforeach
+   <tr>
+    <td><strong>SUM:</strong></td>
+    <td>{{ $sumX1 }}</td>
+    <td>{{ $sumX2 }}</td>
+   </tr>
+   <tr>
+    <td><strong>Rerata:</strong></td>
+    <td>{{ $averageX1 }}</td>
+    <td>{{ $averageX2 }}</td>
+   </tr>
+   <tr>
+    <td><strong>SD:</strong></td>
+    <td>{{ $roundedSDX1 }}</td>
+    <td>{{ $roundedSDX2 }}</td>
+   </tr>
+   <tr>
+    <td><strong>Variants:</strong></td>
+    <td>{{ $roundedVariance1 }}</td>
+    <td>{{ $roundedVariance2 }}</td>
+   </tr>
+  </tbody>
+</table>
+```
+
+
+
 # Liliefors
 
 Cara membuat Liliefors
