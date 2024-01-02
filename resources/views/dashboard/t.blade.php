@@ -44,6 +44,7 @@
     <td>{{ $roundedVariance2 }}</td>
    </tr>
   </tbody>
+ </table>
 </div>
 
  @endsection

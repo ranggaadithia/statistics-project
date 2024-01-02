@@ -25,5 +25,8 @@ Route::post('/chi', [ScoreController::class, 'calculateChiSqure'])->name('chi');
 Route::get('/uji-t', [ScoreController::class, 'ujiT'])->name('uji-t');
 Route::get('/liliefors', [ScoreController::class, 'liliefors'])->name('liliefors');
 Route::get('export/', [ScoreController::class, 'export']);
-Route::get('import/', [ScoreController::class, 'importView']);
+Route::get('import/', function () {
+ return view('dashboard.import');
+});
 Route::post('import/', [ScoreController::class, 'import'])->name('import');
+Route::get('biserial', [ScoreController::class, 'biserial']);

@@ -260,4 +260,48 @@ class ScoreController extends Controller
 
         return redirect('/')->with('success', 'Success Import Scores');
     }
+
+    public function biserial()
+    {
+        $result = DB::table('ttest')->get();
+        $N = $result->count();
+
+        // Assuming 'x' is the column you want to calculate biserial correlation for
+        $sumX1 = $result->sum('x1');
+        $sumX2 = $result->sum('x2');
+
+        $meanX1 = $sumX1 / $N;
+        $meanX2 = $sumX2 / $N;
+
+        // Calculate SSY (Sum of Squares for Y) for x1 and x2 separately
+        $SSYX1 = $result->sum(function ($item) use ($meanX1) {
+            return pow($item->x1 - $meanX1, 2);
+        });
+        $SSYX2 = $result->sum(function ($item) use ($meanX2) {
+            return pow($item->x2 - $meanX2, 2);
+        });
+
+        // Calculate ΣY2 for x1 and x2 separately
+        $sumY2X1 = $result->sum(function ($item) {
+            return pow($item->x1, 2);
+        });
+        $sumY2X2 = $result->sum(function ($item) {
+            return pow($item->x2, 2);
+        });
+
+        // Create a new variable 'total' that combines x1 and x2 values
+        $total = $result->pluck('x1')->merge($result->pluck('x2'))->toArray();
+        $Ntotal = count($total);
+        $sumN = array_sum($total);
+        $sumY2N = array_sum(array_map(function ($item) {
+            return pow($item, 2);
+        }, $total));
+        $meanN = $sumN / $Ntotal;
+        $SSYN = array_sum(array_map(function ($item) use ($meanN) {
+            return pow($item - $meanN, 2);
+        }, $total));
+
+
+        return view('dashboard.biserial', compact('result', 'N', 'sumX1', 'sumX2', 'meanX1', 'meanX2', 'SSYX1', 'SSYX2', 'sumY2X1', 'sumY2X2', 'Ntotal', 'sumN', 'sumY2N', 'meanN', 'SSYN'));
+    }
 }
