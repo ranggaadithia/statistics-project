@@ -1,6 +1,6 @@
 # Uji-T
 
-pertama download file [ttest.sql](https://github.com/ranggaadithia/statistics-project/blob/main/ttest.sql) pada repo ini, lalu import ke dalam database kalian.
+pertama download file [ttest.sql](https://github.com/ranggaadithia/statistics-project/blob/main/ttest.sql) pada repo ini, lalu import ke dalam database kalian. Silahkan ganti datanya sesuai keperluan
 
 lalu copy code dibawah lalu paste di controller kalian
 ```php
